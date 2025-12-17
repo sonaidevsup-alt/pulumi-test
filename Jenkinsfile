@@ -10,6 +10,7 @@ pipeline {
         
         // Mantemos a lógica da cor (mesmo que null, vai cair no blue por enquanto)
         COR_DO_DEPLOY = "${env.BRANCH_NAME == 'develop' ? 'green' : 'blue'}"
+        KUBECONFIG = '/var/jenkins_home/kubeconfig'
     }
 
     stages {
