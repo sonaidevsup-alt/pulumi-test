@@ -1,0 +1,3 @@
+config:
+  lab-agora-vai:redisPassword:
+    secure: AAABADmJ6Is9FsKRKRcjpq2d3yEXWAxofcWHNq6fZqLJtOgaGjgZ5w==
