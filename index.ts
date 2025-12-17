@@ -135,3 +135,5 @@ export const url = pulumi.interpolate`http://${finalService}:80`;
 
 // Debug: Para você ver no log do Jenkins o que ele escolheu
 pulumi.log.info(`DEPLOY REALIZADO NA COR: ${activeColor}`);
+
+// just to trigger
