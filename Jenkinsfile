@@ -3,9 +3,12 @@ pipeline {
     
     tools { nodejs 'node-lts' }
 
-    // Define a cor baseada na branch, mas permite mudar manualmente se precisar
     environment {
-        // Se a branch for 'develop', força ser 'green'. Senão, 'blue'.
+        // --- A MÁGICA É ESSA LINHA: ---
+        // O Jenkins pega do cofre (ID 'pulumi-token-id') e joga na variável que o Pulumi exige
+        PULUMI_ACCESS_TOKEN = credentials('pulumi-token-id')
+        
+        // Mantemos a lógica da cor (mesmo que null, vai cair no blue por enquanto)
         COR_DO_DEPLOY = "${env.BRANCH_NAME == 'develop' ? 'green' : 'blue'}"
     }
 
@@ -16,11 +19,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "--- Detectado branch: ${env.BRANCH_NAME} ---"
-                echo "--- Deployando versão: ${env.COR_DO_DEPLOY} ---"
-                
-                // O Pulumi vai ler a variável COR_DO_DEPLOY automaticamente
-                sh 'pulumi up --yes --stack dev'
+                echo "--- Usando Token Seguro ---"
+                // Adicionei --non-interactive para garantir que ele não trave pedindo confirmação
+                sh 'pulumi up --yes --stack dev --non-interactive'
             }
         }
     }
